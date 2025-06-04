@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+    
+}
+.parent{
+    display: flex;
+}
+.wholecontent-1{
+
+background:rgb(239, 238, 238);
+width: 300px;
+height: 1500px;
+margin-top: 20px;
+margin-bottom: 20px;
+
+}
+.womenImg{
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+    margin-left: 70px;
+    margin-top: 20px;
+
+}
+.wholecontent-2{
+
+background:white;
+width: 430px;
+height: 1500px;
+margin-top: 20px;
+margin-bottom: 20px;
+
+}
+.left-border{
+
+background:rgb(8, 72, 136);
+width: 20px;
+height: 1480px;
+margin-top: 30px;
+margin-bottom: 10px;
+margin-left: 500px;
+
+}
+.right-border{
+    background:rgb(8, 72, 136);
+width: 20px;
+height: 1480px;
+margin-top: 30px;
+margin-bottom: 10px;
+}
+.left-headings{
+
+    background: gray;
+    align-items: center;
+    width: 200px;
+    margin-left: 45px;
+    margin-top: 20px;
+    padding-left: 45px;
+    padding-top: 5px;
+    height: 30px;
+    border-radius: 60px;
+
+    
+}
+.wholecontent-1 i{
+   
+    padding-left: 45px;
+    padding-top: 15px;
+   
+}
+.wholecontent-1 b,p{
+
+    padding-left: 45px;
+    padding-top: 15px;
+    
+  
+
+}
+.SKILLS{
+    background: gray;
+    align-items: center;
+    width: 200px;
+    margin-left: 45px;
+    margin-top: 20px;
+    padding-left: 70px;
+    padding-top: 5px;
+    height: 30px;
+    border-radius: 60px;
+
+}
+.left-headings p,ul{
+    margin-left: 45px;
+}
+.wholecontent-2 h5{
+    font-size: x-large;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+.wholecontent-2 h6{
+    font-size: medium;
+     margin-left: 40px;
+    margin-top: 30px;
+   
+
+}
+.job{
+    background:rgb(239, 238, 238);
+    width: 360px;
+    padding-top: 5px;
+    margin-left: 30px;
+    height: 30px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+}
+.job p{
+    padding-right: 0px;
+}
+.Lorem{
+    text-align: justify;
+    justify-content: center;
+}
+.ref{
+    
+      display: flex;
+     
+    
+}
+.sub-1{
+     height: 200px;
+     width: 200px;
+      background:rgb(239, 238, 238);
+      margin-left: 30px;
+      padding-left: 0px;
+     
+      padding-left: 0px;
+     
+}
+.sub-2{
+    background: rgb(219, 96, 25);
+      height: 200px;
+       width: 20px;
+}
+.sub-3{
+    background:rgb(239, 238, 238);
+          height: 200px;
+            width: 160px;
+            padding-left: 5px;
+            margin-left: 5px;
+            padding-top: 30px;
+
+}
