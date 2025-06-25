@@ -47,7 +47,7 @@ nav .container{
     text-decoration: none ;
 }
 .button{
-    background-color: maroon;
+    background-color:maroon;
     color: white;
     padding: 8px 15px;
     border-radius: 20px;
@@ -66,7 +66,7 @@ nav .container{
 }
 .home-text{
     max-width: 50%;
-    margin-left: 240px;
+    margin-left: 282px;
     margin-bottom: 5px;
 }
 .home-text h1{
@@ -100,6 +100,7 @@ nav .container{
     padding: 20px;
     margin: 0 auto;
     max-width: 1000px;
+    margin-left: 282px;
 }
 .travel-list{
     width: 220px;
@@ -185,4 +186,69 @@ nav .container{
     margin-right: 10px;
     color: white;
     text-decoration: none;
+}
+@media(max-width: 1024px){
+    .home{
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+    .home-text{
+        margin: 0%;
+        max-width: 100%;
+    }
+    .travel-container{
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px;
+    }
+    .logos{
+        margin-left: 0%;
+        text-align: center;
+    }
+    nav .container{
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .links{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .footer{
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        text-align: center;
+    }
+    .footer1{
+        width: 100%;
+    }
+}
+@media(max-width: 600px){
+    .home-text h1{
+        font-size: 28px;
+    }
+    .places h2{
+        font-size: 14px;
+    }
+    .places p{
+        font-size: 14px;
+    }
+    .travel-container{
+        grid-template-columns: 1fr;
+    }
+    .travel-list{
+        width: 100%;
+    }
+    .photo{
+        height: 200px;
+    }
+    .button{
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    .f-title{
+        font-size: 28px;
+    }
 }
