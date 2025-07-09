@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="number1" placeholder="first number">
+    <input type="text" id="number2" placeholder="second number">
+
+    <button onclick="calculate('+')">+</button>
+
+    <span id="result">0</span>
+
+    <script>
+        function calculate(ope){
+            let a = parseInt(document.getElementById("number1").value);
+            let b = parseInt(document.getElementById("number2").value);
+            let c = 0;
+
+            if(isNaN(a) || isNaN(b))
+            {
+                document.getElementById("result").textContent = "Enter number";
+                return;
+            }
+            switch(ope)
+            {
+                case '+':
+                c = a + b;
+                break;
+            default:
+                c = "invalid";
+            }
+            document.getElementById("result").textContent = c;
+        }
+    </script>
+</body>
+</html>

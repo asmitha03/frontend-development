@@ -14,6 +14,9 @@ header{
     padding: 10px;
     text-align: center;
 }
+header h1{
+    font-size:18px;
+}
 .container{
     max-width: 1200px;
     margin: 0 auto;
@@ -95,17 +98,20 @@ nav .container{
 }
 .travel-container{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 12px;
     padding: 20px;
     margin: 0 auto;
     max-width: 1000px;
-    margin-left: 282px;
 }
 .travel-list{
-    width: 220px;
-    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    background: #f9f9f9;
+    padding: 15px;
     border-radius: 12px;
+    text-align: center;
 }
 .photo{
     width: 100%;
