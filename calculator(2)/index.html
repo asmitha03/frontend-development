@@ -6,80 +6,55 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text" id="display" readonly>
+    <input type="text" id="display" readonly> <br>
+
+    <button onclick="press('%')">%</button>
+    <button onclick="press('/')">/</button>
+    <button onclick="press('*')">*</button><br>
 
     <button onclick="press('7')">7</button>
     <button onclick="press('8')">8</button>
     <button onclick="press('9')">9</button>
-    <button onclick="ope('/')">/</button>
+    <button onclick="press('-')">-</button> <br>
 
     <button onclick="press('4')">4</button>
     <button onclick="press('5')">5</button>
     <button onclick="press('6')">6</button>
-    <button onclick="ope('*')">*</button>
+    <button onclick="press('+')">+</button><br>
 
     <button onclick="press('1')">1</button>
     <button onclick="press('2')">2</button>
     <button onclick="press('3')">3</button>
-    <button onclick="ope('-')">-</button>
+    <button onclick="calculate()">=</button><br>
 
     <button onclick="press('0')">0</button>
     <button onclick="press('.')">.</button>
-    <button onclick="calculate()">=</button>
-    <button onclick="ope('+')">+</button>
 
     <button onclick="clearDispaly()">Clear</button>
 
     <script>
-        let num1 = '';
-        let num2 = '';
-        let operator = '';
-        let result = '';
-
-        function press(number){
-            document.getElementById("display").value += number;
-        }
-        function ope(op){
-            num1 = document.getElementById("display").value;
-            operator = op;
-            document.getElementById("display").value = '';
+        let expression = '';
+        function  press(val){
+            expression += val;
+            document.getElementById("display").value = expression;
         }
         function calculate(){
-            num2 = document.getElementById("display").value;
-
-            let a = parseInt(num1);
-            let b = parseInt(num2);
-            if (operator === '+'){
-                result = a + b;
+            try{
+                let result = eval(expression);
+                document.getElementById("display").value = result;
+                expression = result.toString();
             }
-            else if (operator === '-'){
-            result = a - b;
+            catch{
+                document.getElementById("display").value = "error";
+                expression = '';
             }
-            else if (operator === '*'){
-                result = a * b;
-            }
-            else if (operator === '/'){
-                if (b === 0){
-                    result = "error";
-                }
-                else{
-                    result = a / b;
-                }
-            }
-            document.getElementById("display").value = result;
-            }
-            function clearDispaly()
-            {
-                document.getElementById("display").value = '';
-                num1 = '';
-                num2 = '';
-                operator = '';
-            }
-        
-
+        }
+        function clearDispaly()
+        {
+            expression = '';
+            document.getElementById("display").value = '';
+        }
     </script>
-
-
 
 </body>
 </html>
