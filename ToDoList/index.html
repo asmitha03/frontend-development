@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📋To-Do-List</h1>
+
+        <div class="input">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <button id="addBtn" onclick="addTask()">Add</button>
+            <button id="updateBtn" class="hidden" onclick="updateTask()">Update</button>
+        </div>
+
+        <div class="input">
+            <input type="text" id="searchInput" placeholder="🔍search tasks..." oninput="searchTasks()">
+        </div>
+
+        <div id="error" class="error"></div>
+
+        <div class="table-cont">
+            <h2>📝Task List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>⭐</th>
+                        <th>Task</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="taskTable"></tbody>
+            </table>
+        </div>
+
+        <div class="table-cont">
+            <h2>🗑️Deleted Tasks</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Deleted At</th>
+                        <th>Restore</th>
+                    </tr>
+                </thead>
+                <tbody id="deletedTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
