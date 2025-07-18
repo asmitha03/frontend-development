@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+</head>
+<body>
+    <h2>To-Do-List</h2>
+    <input id="task" type="text" placeholder="Enter a task" oninput="autoSearch()">
+    <button onclick="addTask()">Add</button>
+    <button onclick="updateTask()">Update</button>
+    <p id="error" style="color: red;"></p>
+
+    <h4>📝New Tasks</h4>
+    <ul id="newlist"></ul>
+
+    <h4>❌Not Done</h4>
+    <ul id="notDoneList"></ul>
+
+    <h4>✅Done</h4>
+    <ul id="donelist"></ul>
+
+    <h4>🗑️Deleted Tasks</h4>
+    <ul id="deletedlist"></ul>
+
+    <script>
+        let tasks = [];
+
+        function addTask()
+        {
+            const input = document.getElementById("task");
+            const text = input.value.trim();
+            const errors = document.getElementById("error");
+            errors.innerText= "";
+
+            if(text === "")
+            {
+                errors.innerText = "Please enter a task";
+                return;
+            }
+
+            if(tasks.includes(text.toLowerCase())){
+                errors.innerText = "Task already exists";
+                return;
+            }
+             
+            tasks.push(text.toLowerCase());
+            input.value = "";
+            createTaskElement(text, "newlist");
+        }
+
+        function createTaskElement(text, listId){
+            const li = document.createElement("li");
+            li.innerText = text;
+            li.dataset.value = text.toLocaleLowerCase();
+
+            const donebtn = document.createElement("button");
+            donebtn.innerText = "✔️";
+            donebtn.onclick = function() {
+                li.remove();
+                moveToList(text, true);
+            };
+
+            const notdonebtn = document.createElement("button");
+            notdonebtn.innerText = "❌";
+            notdonebtn.onclick = function() {
+                li.remove();
+                moveToList(text, false);
+            };
+
+            const editbtn = document.createElement("button");
+            editbtn.innerText = "✏️";
+            editbtn.onclick = function(){
+                const newTask = prompt("Edit the task:", text);
+                if (newTask && newTask.trim() !== ""){
+                    const index = tasks.indexOf(text.toLowerCase());
+                    tasks[index] = newTask.toLowerCase();
+                    li.firstChild.nodeValue = newTask;
+                    li.dataset.value = newTask.toLowerCase();
+                }
+            };
+
+            li.appendChild(donebtn);
+            li.appendChild(notdonebtn);
+            li.appendChild(editbtn);
+           
+            document.getElementById(listId).appendChild(li);
+        }
+
+        function moveToList(text, isdone)
+        {
+            const  li = document.createElement("li");
+            li.innerText = text;
+            li.dataset.value = text.toLowerCase();
+
+            const  deletebtn = document.createElement("button");
+            deletebtn.innerText = "🗑️";
+            deletebtn.onclick = function() {
+                li.remove();
+                shownInDeleted(text);
+                tasks = tasks.filter(t => t !== text.toLowerCase());
+            };
+
+              const editbtn = document.createElement("button");
+              editbtn.innerText = "✏️";
+              editbtn.onclick = function(){
+                const newTask = prompt("Edit the task:", text);
+                if (newTask && newTask.trim() !== ""){
+                    const index = tasks.indexOf(text.toLowerCase());
+                    tasks[index] = newTask.toLowerCase();
+                    li.firstChild.nodeValue = newTask;
+                    li.dataset.value = newTask.toLowerCase();
+                }
+            };
+
+
+            li.appendChild(deletebtn);
+            li.appendChild(editbtn);
+        
+            if(isdone)
+            {
+                li.style.textDecoration = "line-through";
+                document.getElementById("donelist").appendChild(li);
+            }
+            else{
+                document.getElementById("notDoneList").appendChild(li);
+            }
+            }
+
+            function shownInDeleted(text){
+                const li = document.createElement("li");
+                li.innerText = text;
+                li.dataset.value = text.toLowerCase();
+
+                const restorebtn = document.createElement("button");
+                restorebtn.innerText = "🔄";
+                restorebtn.onclick = function() {
+                    li.remove();
+                    tasks.push(text.toLowerCase());
+                    createTaskElement(text, "newlist");
+                };
+
+                li.appendChild(restorebtn);
+                document.getElementById("deletedlist").append(li);
+            }
+            
+            function updateTask(){
+                const errors = document.getElementById("error");
+                errors.innerText = "";
+
+                const oldText = prompt("Enter the existing task to update:");
+                if (!oldText || !tasks.includes(oldText.toLowerCase())){
+                    errors.innerText = "Old task not found";
+                    return;
+                }
+
+                const newText = prompt("Enter the new task name:");
+                if (!newText || newText.trim() === ""){
+                    errors.innerText  = "New task cannot be empty";
+                    return;
+                }
+
+                tasks = tasks.map(t => (t === oldText.toLowerCase() ? newText.toLowerCase() : t));
+
+                ["newlist", "notDoneList", "donelist"].forEach(listId =>{
+                    const list = document.getElementById(listId).getElementsByTagName("li");
+                    for (let li of list) {
+                        if (li.dataset.value === oldText.toLowerCase()) {
+                            li.firstChild.nodeValue = newText;
+                            li.dataset.value = newText.toLowerCase();
+                        }
+                    }
+            });
+        }
+
+        function autoSearch(){
+            const input = document.getElementById("task");
+            const searchText = input.value.trim().toLowerCase();
+
+            const allListIds = ["newlist", "notDoneList", "donelist", "deletedlist"];
+            
+            allListIds.forEach(listId => {
+            const list = document.getElementById(listId).getElementsByTagName("li");
+            for (let li of list) {
+                if (searchText === "") {
+                    li.style.display = "list-item";
+                } else if (li.dataset.value.includes(searchText)){
+                li.style.display = "list-item";
+            } else {
+                li.style.display = "none";
+            }
+        }
+    });
+
+}
+
+
+</script>
+</body>
+</html>
