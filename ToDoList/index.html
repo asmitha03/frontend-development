@@ -11,13 +11,15 @@
         <h1>📋To-Do-List</h1>
 
         <div class="input">
-            <input type="text" id="taskInput" placeholder="Enter a task">
+            <input type="text" id="taskInput" placeholder="Enter a task"/>
             <button id="addBtn" onclick="addTask()">Add</button>
             <button id="updateBtn" class="hidden" onclick="updateTask()">Update</button>
         </div>
 
         <div class="input">
-            <input type="text" id="searchInput" placeholder="🔍search tasks..." oninput="searchTasks()">
+            <input type="text" id="searchInput" placeholder="🔍search tasks..." oninput="searchTasks()"/>
+            <button onclick="sortTasks('asc')">🔼A-Z</button>
+            <button onclick="sortTasks('desc')">🔽Z-A</button>
         </div>
 
         <div id="error" class="error"></div>

@@ -80,6 +80,7 @@ th {
 .star{
     font-size: 19px;
     cursor: pointer;
+    color: gray;
 }
 .star.fav {
     color: green;

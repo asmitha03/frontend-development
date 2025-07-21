@@ -1,37 +1,66 @@
 let tasks = [];
 let deletedTasks = [];
 let editingIndex = null;
+let currentSort = null;
  
 function GetDate() {
     return new Date().toLocaleString();
 }
 
-function renderTasks() {
+function saveLocalStorage() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("deletedTasks", JSON.stringify(deletedTasks));
+    localStorage.setItem("currentSort", currentSort);
+
+}
+
+function loadFromLocalStorage() {
+    const storedTasks = localStorage.getItem("tasks");
+    const storedDeleted = localStorage.getItem("deletedTasks");
+    const sortMode = localStorage.getItem("currentSort");
+
+    if (storedTasks) tasks = JSON.parse(storedTasks);
+    if (storedDeleted) deletedTasks = JSON.parse(storedDeleted);
+    if (sortMode) currentSort = sortMode;
+
+    searchTasks();
+    renderDeleted();
+}
+
+
+function renderTasks(taskList = tasks) {
     const table = document.getElementById("taskTable");
     table.innerHTML = "";
-    tasks.forEach((task, index) => {
+    taskList.forEach((task) => {
+        const index = tasks.indexOf(task);
         const row = document.createElement("tr");
 
         const starCell = document.createElement("td");
         const star = document.createElement("span");
         star.innerHTML = "★";
         star.className = "star" + (task.favorite ? "fav" : "");
-        star.onclick = () => toggleFavorite(index);
+        star.onclick = () => toggleFavorite(tasks.indexOf(task));
         starCell.appendChild(star);
         row.appendChild(starCell);
 
-        row.innerHTML += `
-        <td>${task.name}</td>
-        <td>${task.date}</td>
-        <td>${task.status}</td>
-        `;
+        const nameCell = document.createElement("td");
+        nameCell.innerText = task.name;
+        row.appendChild(nameCell);
+
+        const dateCell = document.createElement("td");
+        dateCell.innerText = task.date;
+        row.appendChild(dateCell);
+
+        const statusCell = document.createElement("td");
+        statusCell.innerText = task.status;
+        row.appendChild(statusCell);
 
         const actionCell = document.createElement("td");
         actionCell.innerHTML = `
-        <button onclick="markStatus(${index}, 'Done')">✅</button>
-        <button onclick="markStatus(${index}, 'Not Done')">❌</button>
-        <button onclick="editTask(${index})">✏️</button>
-        <button onclick="deleteTask(${index})">🗑️</button>
+        <button onclick="markStatus(${tasks.indexOf(task)}, 'Done')">✅</button>
+        <button onclick="markStatus(${tasks.indexOf(task)}, 'Not Done')">❌</button>
+        <button onclick="editTask(${tasks.indexOf(task)})">✏️</button>
+        <button onclick="deleteTask(${tasks.indexOf(task)})">🗑️</button>
         `;
         row.appendChild(actionCell);
 
@@ -77,7 +106,8 @@ function addTask() {
 
     input.value = "";
     error.innerText = "";
-    renderTasks();
+   saveLocalStorage();
+   searchTasks();
 }
 
 function editTask(index){
@@ -112,14 +142,16 @@ function updateTask(){
     document.getElementById("addBtn").classList.remove("hidden");
     document.getElementById("updateBtn").classList.add("hidden");
 
-    renderTasks();
+   saveLocalStorage();
+   searchTasks();
 }
 
 function deleteTask(index)  {
     const removed = tasks.splice(index, 1)[0];
     removed.deletedAt = GetDate();
     deletedTasks.push(removed);
-    renderTasks();
+    saveLocalStorage();
+    searchTasks();
     renderDeleted();
 }
 
@@ -127,31 +159,42 @@ function restoreTask(index) {
     const restored = deletedTasks.splice(index, 1)[0];
     delete restored.deletedAt;
     tasks.push(restored);
-    renderTasks();
+    saveLocalStorage();
+    searchTasks();
     renderDeleted();
 }
 
 function markStatus(index, status) {
     tasks[index].status = status;
-    renderTasks();
+    saveLocalStorage();
+    searchTasks();
 }
 
 function toggleFavorite(index) {
     tasks[index].favorite = !tasks[index].favorite;
-    renderTasks();
+    saveLocalStorage();
+    searchTasks();
 }
 
 function searchTasks() {
     const query = document.getElementById("searchInput").value.toLowerCase();
-    const rows = document.querySelectorAll("#taskTable tr");
+    let filteredTasks = tasks.filter(task => 
+        task.name.toLowerCase().includes(query)
+    );
 
-    rows.forEach(row => {
-        const taskName = row.children[1]?.innerText.toLowerCase() || "";
-        row.style.display = taskName.includes(query) ? "" : "none";
+    if (currentSort === 'asc') {
+        filteredTasks.sort((a,b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    } else if (currentSort === "desc") {
+        filteredTasks.sort((a,b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
+    }
 
-    });
+    renderTasks(filteredTasks);
 }
 
+function sortTasks(order) {
+       currentSort = order;
+       saveLocalStorage();
+       searchTasks();
+}
 
-
-
+window.onload = loadFromLocalStorage;
