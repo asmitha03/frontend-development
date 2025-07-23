@@ -7,6 +7,8 @@ const images = [
 
 let currentIndex = 0;
 let intervalId;
+let currentZoom = 1;
+
 const sliderImage = document.getElementById("sliderImage");
 const dotscontainer = document.getElementById("dotscontainer");
 
@@ -34,7 +36,7 @@ function showImage(index) {
 
 function updateDots() {
     dots.forEach((dot, i) =>{
-        dot.classList.toogle("active", i=== currentIndex);
+        dot.classList.toggle("active", i === currentIndex);
 });
 }
 
@@ -63,6 +65,20 @@ function resumeSlider() {
 function resetInterval() {
     pauseSlider();
     resumeSlider();
+}
+
+function zoomIn() {
+    currentZoom += 0.1;
+    applyZoom();
+}
+
+function zoomOut() {
+    currentZoom = Math.max(0.5, currentZoom - 0.1);
+    applyZoom();
+}
+
+function applyZoom() {
+    sliderImage.style.transform = `scale(${currentZoom})`;
 }
 
 window.onload = () => {
